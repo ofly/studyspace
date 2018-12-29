@@ -1,0 +1,27 @@
+线程函数的定义：
+
+    void *thread_fun(void *arg);
+
+
+线程的启动：
+
+    #include <pthread.h>
+    int pthread_create(pthread_t *tid, const pthread_attr *attr, void *(*func)(void *), void *arg);
+
+
+线程的停止：
+
+    #include <pthread.h>
+    int pthread_exit(void *ptr);        // 线程流中使用
+    int pthread_cancel(pthread_t tid);  // 线程流外使用
+
+
+线程的清理：
+    
+    #include <pthread.h>
+    void pthread_cleanup_push(void (*rtn)(void *)，void *arg);
+    void pthread_cleanup_pop(int execute);
+    
+    // 主要是清理线程所占用的资源，特别是锁资源
+    // 注册顺序和执行顺序正好相反
+    // 线程从启动例程return返回时，清理函数不执行，pthread_exit返回时，清理函数执行
